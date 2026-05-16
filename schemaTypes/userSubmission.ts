@@ -5,9 +5,23 @@ export const userSubmission = defineType({
   title: 'User Submissions',
   type: 'document',
   fields: [
-    defineField({name: 'title', title: 'Title', type: 'string'}),
-    defineField({name: 'image', title: 'Uploaded Design', type: 'image'}),
-    defineField({name: 'uploadDate', title: 'Upload Date', type: 'datetime'}),
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'image',
+      title: 'Uploaded Design',
+      type: 'image',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'uploadDate',
+      title: 'Upload Date',
+      type: 'datetime',
+      readOnly: true,
+    }),
   ],
-  readOnly: true, // Prevents accidental edits in the studio
 })
