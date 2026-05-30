@@ -69,7 +69,14 @@ export const blockContentType = defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative Text',
-        }
+        },
+        {
+          name: 'isTracer',
+          type: 'boolean',
+          title: 'Show in Gallery & Trace Tool',
+          description: 'Tick this box if this is a black-and-white design trace to display it in the Gallery and Trace Tool pages.',
+          initialValue: false,
+        },
       ]
     }),
   ],
