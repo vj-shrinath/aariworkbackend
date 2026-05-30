@@ -71,10 +71,10 @@ export const blockContentType = defineType({
           title: 'Alternative Text',
         },
         {
-          name: 'isTracer',
+          name: 'isDesignTrace',
           type: 'boolean',
-          title: 'Show in Gallery & Trace Tool',
-          description: 'Tick this box if this is a black-and-white design trace to display it in the Gallery and Trace Tool pages.',
+          title: 'Is Design Trace?',
+          description: 'Check this if the image is a black design on white paper (trace/sketch). Only checked images appear in the Gallery and Trace Tool.',
           initialValue: false,
         },
       ]
