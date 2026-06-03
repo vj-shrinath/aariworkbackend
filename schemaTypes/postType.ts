@@ -34,6 +34,7 @@ export const postType = defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
+          validation: (Rule) => Rule.required(),
         })
       ]
     }),
@@ -50,6 +51,44 @@ export const postType = defineType({
       name: 'body',
       type: 'blockContent',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO & Social',
+      type: 'seo',
+      group: 'optimization',
+    }),
+    defineField({
+      name: 'ai',
+      title: 'AI Optimization',
+      type: 'aiOptimization',
+      group: 'optimization',
+    }),
+    defineField({
+      name: 'geo',
+      title: 'GEO (Search Entities)',
+      type: 'geoOptimization',
+      group: 'optimization',
+    }),
+    defineField({
+      name: 'relatedPosts',
+      title: 'Related Posts',
+      type: 'array',
+      of: [{ type: 'reference', to: { type: 'post' } }],
+      group: 'optimization',
+    }),
+    defineField({
+      name: 'pillarContent',
+      title: 'Is Pillar Content?',
+      type: 'boolean',
+      initialValue: false,
+      group: 'optimization',
+    }),
+  ],
+  groups: [
+    {
+      name: 'optimization',
+      title: 'SEO & AI Optimization',
+    },
   ],
   preview: {
     select: {

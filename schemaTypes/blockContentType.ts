@@ -52,6 +52,30 @@ export const blockContentType = defineType({
                 name: 'href',
                 type: 'url',
               },
+              {
+                title: 'Is Affiliate Link?',
+                name: 'isAffiliate',
+                type: 'boolean',
+                initialValue: false,
+              },
+              {
+                title: 'Product Name',
+                name: 'productName',
+                type: 'string',
+                hidden: ({ parent }) => !parent?.isAffiliate,
+              },
+              {
+                title: 'Product Image',
+                name: 'productImage',
+                type: 'image',
+                hidden: ({ parent }) => !parent?.isAffiliate,
+              },
+              {
+                title: 'Price',
+                name: 'price',
+                type: 'string',
+                hidden: ({ parent }) => !parent?.isAffiliate,
+              },
             ],
           },
         ],
@@ -69,6 +93,17 @@ export const blockContentType = defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative Text',
+          validation: (Rule: any) => Rule.required(),
+        },
+        {
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+        },
+        {
+          name: 'credit',
+          type: 'string',
+          title: 'Credit',
         },
         {
           name: 'isDesignTrace',
