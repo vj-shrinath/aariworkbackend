@@ -10,11 +10,16 @@ export const imageGallery = defineType({
     defineField({
       name: 'images',
       title: 'Images',
+      description: 'Drag & drop or click "Add item" to upload multiple images at once.',
       type: 'array',
       of: [
         {
           type: 'image',
-          options: {hotspot: true},
+          options: {
+            hotspot: true,
+            accept: 'image/*',
+            storeOriginalFilename: true,
+          },
           fields: [
             defineField({
               name: 'alt',
