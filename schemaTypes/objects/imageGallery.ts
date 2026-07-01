@@ -60,6 +60,13 @@ export const imageGallery = defineType({
       },
       initialValue: 'slider',
     }),
+    defineField({
+      name: 'allImagesAreTrace',
+      title: '✏️ All images are Design Traces',
+      type: 'boolean',
+      description: 'Enable this to mark every image in this gallery as a Design Trace — shows the "Open in Tracing Tool" button on all of them. No need to tick each image individually.',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
