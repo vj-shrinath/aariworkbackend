@@ -31,6 +31,13 @@ export const imageGallery = defineType({
               type: 'string',
               title: 'Caption',
             }),
+            defineField({
+              name: 'isDesignTrace',
+              type: 'boolean',
+              title: 'Is Design Trace?',
+              description: 'Check this if the image is a black design on white paper (trace/sketch). Checked images appear in the Gallery and Trace Tool.',
+              initialValue: false,
+            }),
           ]
         }
       ],
