@@ -114,5 +114,8 @@ export const blockContentType = defineType({
         },
       ]
     }),
+    defineArrayMember({
+      type: 'imageGallery',
+    }),
   ],
 })
