@@ -3,6 +3,8 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {schema} from './schemaTypes'
 import {structure} from './structure'
+import {DownloadImageAction} from './actions/DownloadImageAction'
+import {DeleteSubmissionAction} from './actions/DeleteSubmissionAction'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'lx1zrwct'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
@@ -22,4 +24,13 @@ export default defineConfig({
   ],
 
   schema,
+
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === 'userSubmission') {
+        return [DownloadImageAction, DeleteSubmissionAction]
+      }
+      return prev
+    },
+  },
 })
