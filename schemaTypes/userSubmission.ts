@@ -23,5 +23,12 @@ export const userSubmission = defineType({
       type: 'datetime',
       readOnly: true,
     }),
+    defineField({
+      name: 'approvedForGallery',
+      title: 'Approved for Gallery',
+      type: 'boolean',
+      readOnly: true,
+      initialValue: false,
+    }),
   ],
 })

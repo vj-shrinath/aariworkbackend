@@ -4,6 +4,7 @@ import {structureTool} from 'sanity/structure'
 import {schema} from './schemaTypes'
 import {structure} from './structure'
 import {DownloadImageAction} from './actions/DownloadImageAction'
+import {ApproveToGalleryAction} from './actions/ApproveToGalleryAction'
 import {DeleteSubmissionAction} from './actions/DeleteSubmissionAction'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'lx1zrwct'
@@ -28,7 +29,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       if (context.schemaType === 'userSubmission') {
-        return [DownloadImageAction, DeleteSubmissionAction]
+        return [DownloadImageAction, ApproveToGalleryAction, DeleteSubmissionAction]
       }
       return prev
     },
