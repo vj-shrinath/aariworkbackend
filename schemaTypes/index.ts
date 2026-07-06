@@ -9,6 +9,7 @@ import {seo} from './objects/seo'
 import {aiOptimization} from './objects/aiOptimization'
 import {geoOptimization} from './objects/geoOptimization'
 import {imageGallery} from './objects/imageGallery'
+import {galleryDesign} from './galleryDesign'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     aiOptimization,
     geoOptimization,
     imageGallery,
+    galleryDesign,
   ],
 }
