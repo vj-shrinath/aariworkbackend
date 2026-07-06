@@ -28,10 +28,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       if (context.schemaType === 'userSubmission') {
-        return [
-          DownloadImageAction(context),
-          DeleteSubmissionAction(context),
-        ]
+        return [DownloadImageAction, DeleteSubmissionAction]
       }
       return prev
     },
