@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {ImagesIcon} from '@sanity/icons'
+import {BulkUploadInput} from '../../components/BulkUploadInput'
 
 export const imageGallery = defineType({
   name: 'imageGallery',
@@ -10,7 +11,7 @@ export const imageGallery = defineType({
     defineField({
       name: 'images',
       title: 'Images',
-      description: 'Drag & drop or click "Add item" to upload multiple images at once.',
+      description: 'Drag & drop or Click "Select & Upload Multiple Images" to upload multiple images at once.',
       type: 'array',
       of: [
         {
@@ -43,6 +44,9 @@ export const imageGallery = defineType({
       ],
       options: {
         layout: 'grid',
+      },
+      components: {
+        input: BulkUploadInput,
       },
     }),
     defineField({
