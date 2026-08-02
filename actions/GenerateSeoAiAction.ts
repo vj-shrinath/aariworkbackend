@@ -1,6 +1,5 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
-import {generateTranslationUpdates} from './GenerateTranslationsAction'
 
 const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/generate-post-metadata'
 
@@ -20,7 +19,7 @@ export const GenerateSeoAiAction: DocumentActionComponent = (props: DocumentActi
   const {patch} = useDocumentOperation(props.id, props.type)
 
   return {
-    label: isGenerating ? 'Generating SEO, AI & translations...' : 'Generate SEO, AI & translations',
+    label: isGenerating ? 'Generating SEO & AI...' : 'Generate SEO & AI',
     disabled: isGenerating,
     onHandle: async () => {
       const doc = (props.draft || props.published) as any
@@ -57,9 +56,9 @@ export const GenerateSeoAiAction: DocumentActionComponent = (props: DocumentActi
           ...result.geo,
         }
 
-        const translationUpdates = await generateTranslationUpdates(doc)
-        patch.execute([{set: {seo, ai, geo, ...translationUpdates}}])
-        alert('SEO, AI, GEO, and all language translations generated. Review them, then publish the post.')
+        const excerpt = doc.excerpt || result.excerpt || result.seo?.description || ''
+        patch.execute([{set: {excerpt, seo, ai, geo}}])
+        alert('SEO, AI, and GEO fields generated. Review them, then publish the post.')
         props.onComplete()
       } catch (error) {
         console.error('SEO/AI generation error:', error)

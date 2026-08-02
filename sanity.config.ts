@@ -7,6 +7,7 @@ import {DownloadImageAction} from './actions/DownloadImageAction'
 import {ApproveToGalleryAction} from './actions/ApproveToGalleryAction'
 import {DeleteSubmissionAction} from './actions/DeleteSubmissionAction'
 import {GenerateSeoAiAction} from './actions/GenerateSeoAiAction'
+import {GenerateTranslationsAction} from './actions/GenerateTranslationsAction'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'lx1zrwct'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
@@ -30,7 +31,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       if (context.schemaType === 'post') {
-        return [GenerateSeoAiAction, ...prev]
+        return [GenerateSeoAiAction, GenerateTranslationsAction, ...prev]
       }
       if (context.schemaType === 'userSubmission') {
         return [DownloadImageAction, ApproveToGalleryAction, DeleteSubmissionAction]

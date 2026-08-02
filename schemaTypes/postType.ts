@@ -22,6 +22,15 @@ const localizedBodyFields = translationLocales.map((locale) =>
   }),
 )
 
+const localizedAiFields = translationLocales.map((locale) =>
+  defineField({
+    name: `ai_${locale}`,
+    title: `AI Optimization (${locale.toUpperCase()})`,
+    type: 'aiOptimization',
+    group: 'translations',
+  }),
+)
+
 export const postType = defineType({
   name: 'post',
   title: 'Post',
@@ -89,6 +98,7 @@ export const postType = defineType({
       group: 'content',
     }),
     ...localizedBodyFields,
+    ...localizedAiFields,
     defineField({
       name: 'seo',
       title: 'SEO & Social',
