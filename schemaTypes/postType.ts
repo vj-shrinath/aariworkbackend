@@ -1,6 +1,27 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+const translationLocales = ['hi', 'mr', 'ta', 'te', 'es', 'fr', 'ar', 'de', 'pt', 'ja', 'ko'] as const
+
+const localizedStringFields = (name: 'title' | 'excerpt') =>
+  translationLocales.map((locale) =>
+    defineField({
+      name: `${name}_${locale}`,
+      title: `${name === 'title' ? 'Title' : 'Excerpt'} (${locale.toUpperCase()})`,
+      type: name === 'title' ? 'string' : 'text',
+      group: 'translations',
+    }),
+  )
+
+const localizedBodyFields = translationLocales.map((locale) =>
+  defineField({
+    name: `body_${locale}`,
+    title: `Article body (${locale.toUpperCase()})`,
+    type: 'blockContent',
+    group: 'translations',
+  }),
+)
+
 export const postType = defineType({
   name: 'post',
   title: 'Post',
@@ -11,6 +32,14 @@ export const postType = defineType({
       name: 'title',
       type: 'string',
     }),
+    defineField({
+      name: 'excerpt',
+      title: 'Excerpt',
+      type: 'text',
+      rows: 3,
+    }),
+    ...localizedStringFields('title'),
+    ...localizedStringFields('excerpt'),
     defineField({
       name: 'slug',
       type: 'slug',
@@ -51,6 +80,7 @@ export const postType = defineType({
       name: 'body',
       type: 'blockContent',
     }),
+    ...localizedBodyFields,
     defineField({
       name: 'seo',
       title: 'SEO & Social',
@@ -88,6 +118,10 @@ export const postType = defineType({
     {
       name: 'optimization',
       title: 'SEO & AI Optimization',
+    },
+    {
+      name: 'translations',
+      title: 'Translations',
     },
   ],
   preview: {
