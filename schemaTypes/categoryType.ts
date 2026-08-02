@@ -18,6 +18,7 @@ export const categoryType = defineType({
         name: `title_${locale}`,
         title: `Title (${locale.toUpperCase()})`,
         type: 'string',
+        group: 'translations',
       }),
     ),
     defineField({
@@ -31,5 +32,11 @@ export const categoryType = defineType({
       name: 'description',
       type: 'text',
     }),
+  ],
+  groups: [
+    {
+      name: 'translations',
+      title: 'Translations',
+    },
   ],
 })

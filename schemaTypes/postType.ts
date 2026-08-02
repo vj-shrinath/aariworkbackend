@@ -31,18 +31,21 @@ export const postType = defineType({
     defineField({
       name: 'title',
       type: 'string',
+      group: 'content',
     }),
     defineField({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',
       rows: 3,
+      group: 'content',
     }),
     ...localizedStringFields('title'),
     ...localizedStringFields('excerpt'),
     defineField({
       name: 'slug',
       type: 'slug',
+      group: 'content',
       options: {
         source: 'title',
       },
@@ -51,6 +54,7 @@ export const postType = defineType({
       name: 'author',
       type: 'reference',
       to: {type: 'author'},
+      group: 'content',
     }),
     defineField({
       name: 'mainImage',
@@ -58,6 +62,7 @@ export const postType = defineType({
       options: {
         hotspot: true,
       },
+      group: 'content',
       fields: [
         defineField({
           name: 'alt',
@@ -71,14 +76,17 @@ export const postType = defineType({
       name: 'categories',
       type: 'array',
       of: [defineArrayMember({type: 'reference', to: {type: 'category'}})],
+      group: 'content',
     }),
     defineField({
       name: 'publishedAt',
       type: 'datetime',
+      group: 'content',
     }),
     defineField({
       name: 'body',
       type: 'blockContent',
+      group: 'content',
     }),
     ...localizedBodyFields,
     defineField({
@@ -115,6 +123,10 @@ export const postType = defineType({
     }),
   ],
   groups: [
+    {
+      name: 'content',
+      title: 'Article Content',
+    },
     {
       name: 'optimization',
       title: 'SEO & AI Optimization',
