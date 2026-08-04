@@ -1,6 +1,8 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+import {WordCountInput} from '../components/WordCountInput'
+
 const translationLocales = ['hi', 'mr', 'ta', 'te', 'es', 'fr', 'ar', 'de', 'pt', 'ja', 'ko'] as const
 
 const localizedStringFields = (name: 'title' | 'excerpt') =>
@@ -19,6 +21,9 @@ const localizedBodyFields = translationLocales.map((locale) =>
     title: `Article body (${locale.toUpperCase()})`,
     type: 'blockContent',
     group: 'translations',
+    components: {
+      input: WordCountInput,
+    }
   }),
 )
 
@@ -37,6 +42,38 @@ export const postType = defineType({
   type: 'document',
   icon: DocumentTextIcon,
   fields: [
+    defineField({
+      name: 'generationKeywords',
+      title: 'Target Keywords',
+      type: 'string',
+      description: 'Main keywords you want the AI to target (comma separated, e.g., "aari work for beginners, simple blouse").',
+      group: 'generation',
+    }),
+    defineField({
+      name: 'generationBrief',
+      title: 'Brief / Outline Summary',
+      type: 'text',
+      description: 'Describe what the article should be about & structured.',
+      rows: 4,
+      group: 'generation',
+    }),
+    defineField({
+      name: 'generationTone',
+      title: 'Tone & Custom Instructions',
+      type: 'string',
+      description: 'E.g. "Informative, beginner-friendy", "highly detailed and step by step".',
+      initialValue: 'Informative, beginner-friendly, and engaging',
+      group: 'generation',
+    }),
+    defineField({
+      name: 'generationWordCount',
+      title: 'Target Word Count',
+      type: 'number',
+      description: 'Desired length of the article (e.g. 500, 1000, 1500, 2000 words). Default is 1000.',
+      initialValue: 1000,
+      validation: (Rule) => Rule.min(300).max(4000),
+      group: 'generation',
+    }),
     defineField({
       name: 'title',
       type: 'string',
@@ -96,6 +133,17 @@ export const postType = defineType({
       name: 'body',
       type: 'blockContent',
       group: 'content',
+      components: {
+        input: WordCountInput,
+      }
+    }),
+    defineField({
+      name: 'wordCount',
+      title: 'Current Word Count',
+      type: 'number',
+      readOnly: true,
+      description: 'Calculated word count of the main body content.',
+      group: 'content',
     }),
     ...localizedBodyFields,
     ...localizedAiFields,
@@ -133,6 +181,10 @@ export const postType = defineType({
     }),
   ],
   groups: [
+    {
+      name: 'generation',
+      title: 'AI Creator Brief',
+    },
     {
       name: 'content',
       title: 'Article Content',

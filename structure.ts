@@ -1,4 +1,5 @@
 import { StructureBuilder } from 'sanity/structure'
+import { ArticleHealthDashboard } from './components/ArticleHealthDashboard'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
@@ -6,6 +7,16 @@ export const structure = (S: StructureBuilder) =>
     .items([
       // Standard Post list
       S.documentTypeListItem('post').title('All Posts'),
+      S.divider(),
+
+      // Custom Article Health Dashboard
+      S.listItem()
+        .title('Article Health')
+        .child(
+          S.component(ArticleHealthDashboard)
+            .title('Article Health Analysis')
+            .id('article-health')
+        ),
       S.divider(),
       
       // SEO Audit Dashboard

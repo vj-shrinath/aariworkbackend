@@ -8,6 +8,8 @@ import {ApproveToGalleryAction} from './actions/ApproveToGalleryAction'
 import {DeleteSubmissionAction} from './actions/DeleteSubmissionAction'
 import {GenerateSeoAiAction} from './actions/GenerateSeoAiAction'
 import {GenerateTranslationsAction} from './actions/GenerateTranslationsAction'
+import {IndividualArticleHealthView} from './components/IndividualArticleHealthView'
+import {GenerateArticleAction} from './actions/GenerateArticleAction'
 
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'lx1zrwct'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
@@ -22,6 +24,14 @@ export default defineConfig({
   plugins: [
     structureTool({
       structure,
+      defaultDocumentNode: (S, {schemaType}) => {
+        if (schemaType === 'post') {
+          return S.document().views([
+            S.view.form(),
+            S.view.component(IndividualArticleHealthView).title('SEO Health').id('seo-health'),
+          ])
+        }
+      },
     }),
     visionTool(),
   ],
@@ -31,7 +41,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       if (context.schemaType === 'post') {
-        return [GenerateSeoAiAction, GenerateTranslationsAction, ...prev]
+        return [GenerateArticleAction, GenerateSeoAiAction, GenerateTranslationsAction, ...prev]
       }
       if (context.schemaType === 'userSubmission') {
         return [DownloadImageAction, ApproveToGalleryAction, DeleteSubmissionAction]
