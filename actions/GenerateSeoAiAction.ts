@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
 
-const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkbackend.vercel.app/api/ai/generate-post-metadata'
+const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/generate-post-metadata'
 
 function portableTextToPlainText(value: unknown): string {
   if (!Array.isArray(value)) return ''

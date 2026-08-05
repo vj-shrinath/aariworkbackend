@@ -9,11 +9,11 @@ const AI_ENDPOINT = (() => {
       .replace('/generate-post-metadata', '/generate-post-body')
       .replace('/translate-post', '/generate-post-body')
   }
-  // Dynamic fallback for local development vs production Vercel backend
+  // Dynamic fallback for local development vs production website backend
   if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
     return 'http://localhost:3000/api/ai/generate-post-body'
   }
-  return 'https://aariworkbackend.vercel.app/api/ai/generate-post-body'
+  return 'https://aariworkdesigns.com/api/ai/generate-post-body'
 })()
 
 export const GenerateArticleAction: DocumentActionComponent = (props: DocumentActionProps) => {
