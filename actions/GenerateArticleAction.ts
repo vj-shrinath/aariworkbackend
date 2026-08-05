@@ -9,11 +9,11 @@ const AI_ENDPOINT = (() => {
       .replace('/generate-post-metadata', '/generate-post-body')
       .replace('/translate-post', '/generate-post-body')
   }
-  // Dynamic fallback for local development
+  // Dynamic fallback for local development vs production Vercel backend
   if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
     return 'http://localhost:3000/api/ai/generate-post-body'
   }
-  return 'https://aariworkdesigns.com/api/ai/generate-post-body'
+  return 'https://aariworkbackend.vercel.app/api/ai/generate-post-body'
 })()
 
 export const GenerateArticleAction: DocumentActionComponent = (props: DocumentActionProps) => {
@@ -95,7 +95,12 @@ export const GenerateArticleAction: DocumentActionComponent = (props: DocumentAc
         props.onComplete()
       } catch (error) {
         console.error('Article generation error:', error)
-        alert(`Generation failed: ${(error as Error).message}`)
+        const errMsg = (error as Error).message
+        if (errMsg === 'Failed to fetch') {
+          alert(`Generation failed: Could not connect to the backend AI endpoint (${AI_ENDPOINT}).\n\nPossible causes:\n1. If running locally, ensure your Next.js server is running on http://localhost:3000.\n2. Check your network connection or CORS settings on the API server.`)
+        } else {
+          alert(`Generation failed: ${errMsg}`)
+        }
       } finally {
         setIsGenerating(false)
       }

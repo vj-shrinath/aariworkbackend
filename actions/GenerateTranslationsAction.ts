@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
 
-const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/translate-post'
+const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkbackend.vercel.app/api/ai/translate-post'
 export const locales = ['hi', 'mr', 'ta', 'te', 'es', 'fr', 'ar', 'de', 'pt', 'ja', 'ko'] as const
 
 type Segment = {id: string; text: string}

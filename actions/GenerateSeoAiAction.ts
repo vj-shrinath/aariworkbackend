@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
 
-const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/generate-post-metadata'
+const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkbackend.vercel.app/api/ai/generate-post-metadata'
 
 function portableTextToPlainText(value: unknown): string {
   if (!Array.isArray(value)) return ''
@@ -62,7 +62,12 @@ export const GenerateSeoAiAction: DocumentActionComponent = (props: DocumentActi
         props.onComplete()
       } catch (error) {
         console.error('SEO/AI generation error:', error)
-        alert(`Generation failed: ${(error as Error).message}`)
+        const errMsg = (error as Error).message
+        if (errMsg === 'Failed to fetch') {
+          alert(`Generation failed: Could not connect to the backend AI endpoint (${AI_ENDPOINT}).\n\nPlease ensure your backend API server (e.g. Next.js on localhost:3000) is running and accessible.`)
+        } else {
+          alert(`Generation failed: ${errMsg}`)
+        }
       } finally {
         setIsGenerating(false)
       }
