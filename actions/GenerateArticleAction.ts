@@ -43,11 +43,23 @@ export const GenerateArticleAction: DocumentActionComponent = (props: DocumentAc
             wordCount: doc.generationWordCount || 1000,
           }),
         })
-        const result = await response.json()
-        if (!response.ok) throw new Error(result?.error || 'Generation failed.')
+        const responseText = await response.text()
+        let result: any = null
+        try {
+          result = responseText ? JSON.parse(responseText) : null
+        } catch {
+          result = null
+        }
 
-        if (!Array.isArray(result.body)) {
-          throw new Error('Invalid article body format received from generator.')
+        if (!response.ok) {
+          if (response.status === 504 || response.status === 502) {
+            throw new Error(`Server Timeout (HTTP ${response.status}). The AI generation exceeded Vercel's serverless execution limit.\n\nTips:\n- Try lowering the Target Word Count (e.g. 500-800 words).\n- Ensure maxDuration is configured in your Vercel API route.`)
+          }
+          throw new Error(result?.error || `Server returned error (HTTP ${response.status}): ${responseText.slice(0, 150) || 'Empty response'}`)
+        }
+
+        if (!result || !Array.isArray(result.body)) {
+          throw new Error(result?.error || 'Invalid article body format received from generator.')
         }
 
         // Generate unique _key for every block and child span

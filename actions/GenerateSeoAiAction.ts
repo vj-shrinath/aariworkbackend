@@ -40,8 +40,14 @@ export const GenerateSeoAiAction: DocumentActionComponent = (props: DocumentActi
             slug: doc.slug?.current || '',
           }),
         })
-        const result = await response.json()
-        if (!response.ok) throw new Error(result?.error || 'Generation failed.')
+        const responseText = await response.text()
+        let result: any = null
+        try {
+          result = responseText ? JSON.parse(responseText) : null
+        } catch {
+          result = null
+        }
+        if (!response.ok) throw new Error(result?.error || `Server error (HTTP ${response.status}): ${responseText.slice(0, 150) || 'Empty response'}`)
 
         const seo = {
           ...(doc.seo || {}),
