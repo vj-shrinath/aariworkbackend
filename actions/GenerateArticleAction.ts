@@ -5,9 +5,12 @@ import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from
 const AI_ENDPOINT = (() => {
   const envEndpoint = process.env.SANITY_STUDIO_AI_ENDPOINT
   if (envEndpoint) {
-    return envEndpoint
-      .replace('/generate-post-metadata', '/generate-post-body')
-      .replace('/translate-post', '/generate-post-body')
+    const clean = envEndpoint.trim().replace(/\/$/, '')
+    if (clean.includes('/api/ai/')) {
+      const base = clean.replace(/\/api\/ai\/.*$/, '')
+      return `${base}/api/ai/generate-post-body`
+    }
+    return `${clean}/api/ai/generate-post-body`
   }
   // Dynamic fallback for local development vs production website backend
   if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {

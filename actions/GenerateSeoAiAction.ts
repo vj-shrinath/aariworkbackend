@@ -1,7 +1,18 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
 
-const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/generate-post-metadata'
+const AI_ENDPOINT = (() => {
+  const envEndpoint = process.env.SANITY_STUDIO_AI_ENDPOINT
+  if (envEndpoint) {
+    const clean = envEndpoint.trim().replace(/\/$/, '')
+    if (clean.includes('/api/ai/')) {
+      const base = clean.replace(/\/api\/ai\/.*$/, '')
+      return `${base}/api/ai/generate-post-metadata`
+    }
+    return `${clean}/api/ai/generate-post-metadata`
+  }
+  return 'https://aariworkdesigns.com/api/ai/generate-post-metadata'
+})()
 
 function portableTextToPlainText(value: unknown): string {
   if (!Array.isArray(value)) return ''

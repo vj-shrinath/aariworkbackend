@@ -1,7 +1,18 @@
 import {useState} from 'react'
 import {DocumentActionComponent, DocumentActionProps, useDocumentOperation} from 'sanity'
 
-const AI_ENDPOINT = process.env.SANITY_STUDIO_AI_ENDPOINT || 'https://aariworkdesigns.com/api/ai/translate-post'
+const AI_ENDPOINT = (() => {
+  const envEndpoint = process.env.SANITY_STUDIO_AI_ENDPOINT
+  if (envEndpoint) {
+    const clean = envEndpoint.trim().replace(/\/$/, '')
+    if (clean.includes('/api/ai/')) {
+      const base = clean.replace(/\/api\/ai\/.*$/, '')
+      return `${base}/api/ai/translate-post`
+    }
+    return `${clean}/api/ai/translate-post`
+  }
+  return 'https://aariworkdesigns.com/api/ai/translate-post'
+})()
 export const locales = ['hi', 'mr', 'ta', 'te', 'es', 'fr', 'ar', 'de', 'pt', 'ja', 'ko'] as const
 
 type Segment = {id: string; text: string}
