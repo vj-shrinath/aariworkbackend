@@ -3,6 +3,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {schema} from './schemaTypes'
 import {structure} from './structure'
+import {table} from '@sanity/table'
 import {DownloadImageAction} from './actions/DownloadImageAction'
 import {ApproveToGalleryAction} from './actions/ApproveToGalleryAction'
 import {DeleteSubmissionAction} from './actions/DeleteSubmissionAction'
@@ -34,6 +35,7 @@ export default defineConfig({
       },
     }),
     visionTool(),
+    table(),
   ],
 
   schema,
